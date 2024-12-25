@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build project for Windows (debug)",
+            "type": "shell",
+            "command": "GOOS=windows GOARCH=amd64 go build -o bin/windows/amd64/debug/yourapp.exe",
+        }
+    ]
+}
