@@ -2,9 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build project for Windows (debug)",
+            "label": "Build for Windows",
             "type": "shell",
-            "command": "GOOS=windows GOARCH=amd64 go build -o bin/windows/amd64/debug/yourapp.exe",
-        }
+            "command": "GOOS=windows GOARCH=amd64 go build -o bin/windows/amd64/cakeman.exe",
+        },
+        {
+            "label": "Build for Mac (with Apple silicon)",
+            "type": "shell",
+            "command": "GOOS=darwin GOARCH=arm64 go build -o bin/windows/arm64/cakeman",
+        },
+        {
+            "label": "Build for Linux",
+            "type": "shell",
+            "command": "GOOS=linux GOARCH=amd64 go build -o bin/windows/amd64/cakeman",
+        },
     ]
 }

@@ -50,6 +50,8 @@ var initCmd = &cobra.Command{
 		fmt.Println(color.Output, bgblue("INFO"), "Run 'cake build' to build the project")
 		fmt.Println(color.Output, bgblue("INFO"), "Run 'cake run' to run the project")
 		fmt.Println(color.Output, bgblue("INFO"), "Run 'cake add' to add some dependencies")
+		fmt.Fprintln(color.Output, bgblue("INFO"), "Run 'cake pack' to pack the cake")
+		fmt.Fprintln(color.Output, bgblue("INFO"), "Run 'cake publish' to publish the cake")
 		color.HiGreen("Happy coding!")
 	},
 }

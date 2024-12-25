@@ -9,7 +9,7 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "cakeman",
-	Short: "Knock knock! You're C/C++ package delivered!",
+	Short: "Knock knock! Your C/C++ package delivered!",
 	Long:  `An app that installs C packages and manages them for you!`,
 }
 
