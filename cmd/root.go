@@ -10,7 +10,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "cakeman",
 	Short: "Knock knock! Your C/C++ package delivered!",
-	Long:  `An app that installs C packages and manages them for you!`,
+	Long:  `The missing package manager for C and C++`,
 }
 
 func Execute() {

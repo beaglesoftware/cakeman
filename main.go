@@ -1,6 +1,6 @@
 package main
 
-import "github.com/beaglesoftware/cakeman/cmd"
+import "github.com/beaglesofrwarecakeman/cmd"
 
 func main() {
 	cmd.Execute()

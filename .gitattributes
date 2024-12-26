@@ -1,0 +1,2 @@
+# Telling GitHub Linguist to treat *.cman files as Cakeman
+*.cman linguist-language=Cakeman
