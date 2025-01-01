@@ -1,9 +1,13 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/http"
 	"os"
-	"strings"
+	"runtime"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -14,12 +18,11 @@ var addCmd = &cobra.Command{
 	Long:  ``,
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		buf, err := os.ReadFile("Cake.cman")
+		file, err := os.ReadFile("Cake.cman")
 		if err != nil {
 			printerror("Error reading file: " + err.Error())
 			os.Exit(2)
 		}
-		inputs := strings.Split(string(buf), "\n") // Split file content into lines
 
 		// Check if arguments are provided
 		if len(args) == 0 {
@@ -27,16 +30,59 @@ var addCmd = &cobra.Command{
 			os.Exit(4)
 		}
 
-		// Loop through the inputs and process each
-		for _, input := range inputs {
-			if input != "" { // Ensure we're not processing empty lines
-				err = ParseAndExecute(input)
-				if err != nil {
-					printerror(err.Error())
-					os.Exit(5)
-				}
+		var firstchar string
+
+		for _, char := range args[0] {
+			firstchar = string(char)
+			break
+		}
+
+		info("Getting cakes...")
+
+		url := "https://github.com/beaglesoftware/cakes/blob/main/manifests/" + firstchar + "/" + args[0] + ".cman"
+		response, err := http.Get(url)
+		if err != nil {
+			printerror("Failed to send request to beaglesoftware/cakes GitHub repo:" + err.Error())
+			os.Exit(1)
+		}
+
+		defer response.Body.Close()
+
+		if response.StatusCode != http.StatusOK {
+			printerror("Got a non-200 HTTP status code: " + string(rune(response.StatusCode)))
+			if response.StatusCode == http.StatusNotFound {
+				hint("Error code is 404. Usually 404 error code will be returned if cake doesn't exists. Try adding an existing one")
+			}
+			os.Exit(15)
+		}
+
+		var config Config
+
+		err = json.Unmarshal(file, &config)
+		if err != nil {
+			if runtime.GOOS == "windows" {
+				bgred := color.New(color.BgRed).SprintFunc()
+				fmt.Println(color.Output, bgred("ERROR"), "Failed to read JSON", err)
+			} else {
+				bgred := color.New(color.BgRed).SprintFunc()
+				fmt.Println(bgred("ERROR"), "Failed to read JSON", err)
 			}
 		}
+
+		config.Dependencies[args[0]] = "latest"
+
+		modifiedJSON, err := json.MarshalIndent(config, "", "  ")
+		if err != nil {
+			fmt.Println("Error encoding JSON:", err)
+			return
+		}
+
+		file2, err := os.Create("Cake.cman")
+
+		if err != nil {
+			printerror("Failed to create file Cake.cman")
+		}
+		file2.Write(modifiedJSON)
 	},
 }
 

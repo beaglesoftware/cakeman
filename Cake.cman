@@ -1,2 +1,10 @@
-cake go
-build src/main.c
+{
+ "Package": {
+  "Name": "test",
+  "Description": "",
+  "License": "",
+  "Main": "main.c",
+  "Author": ""
+ },
+ "Dependencies": {}
+}

@@ -1,11 +1,12 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
+	"runtime"
+
+	"github.com/fatih/color"
 
 	"github.com/spf13/cobra"
 )
@@ -13,15 +14,29 @@ import (
 // compileCmd represents the compile command
 var compileCmd = &cobra.Command{
 	Use:   "compile",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Compiles dependencies and app itself",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("compile called")
+		info("Building started!")
+		file, err := os.ReadFile("Cake.cman")
+		if err != nil {
+			printerror("Error reading file: " + err.Error())
+			os.Exit(2)
+		}
+
+		var config map[string]interface{}
+
+		err = json.Unmarshal(file, &config)
+		if err != nil {
+			if runtime.GOOS == "windows" {
+				bgred := color.New(color.BgRed).SprintFunc()
+				fmt.Println(color.Output, bgred("ERROR"), "Failed to read JSON", err)
+			} else {
+				bgred := color.New(color.BgRed).SprintFunc()
+				fmt.Println(bgred("ERROR"), "Failed to read JSON", err)
+			}
+		}
+
+		for
 	},
 }
 
