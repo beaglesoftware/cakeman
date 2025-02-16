@@ -7,7 +7,7 @@
             "command": "GOOS=windows GOARCH=amd64 go build -o bin/windows/amd64/cakeman.exe",
         },
         {
-            "label": "Build for Mac (with Apple silicon)",
+            "label": "Build for Mac (for Apple silicon)",
             "type": "shell",
             "command": "GOOS=darwin GOARCH=arm64 go build -o bin/windows/arm64/cakeman",
         },

@@ -13,14 +13,14 @@ void sayhi(msg) {
     printf("<" + msg + ">\n");
     printf("\n");
     printf("\n");
-    printf("|---------------|"); // Example: An art of MacOS Finder logo
+    printf("|--------/------|"); // Example: An art of MacOS Finder logo
     printf("|   *   /    *  |");
     printf("|      /        |");
     printf("|  \   --\   /  |");
-    printf("|   \    \  /   |");
-    printf("|    \-----/    |");
-    printf("|         \     |");
-    printf("|---------------|");
+    printf("|   \     \ /   |");
+    printf("|    \-----\    |");
+    printf("|           \   |");
+    printf("|------------\--|");
 }
 ```
 
@@ -35,9 +35,9 @@ int main() {
     sayhi("Hello, world!");
     // Output:
     // <Hello, world!>
-    //
-    //
-    //
+    //  \
+    //   \
+    //    \
     // |----------|
     // | *     *  |
     // |          |

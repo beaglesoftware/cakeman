@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"encoding/json"
 
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +15,7 @@ func initproj(name string, filename string, author string) {
 			Name:        name,
 			Description: "",
 			License:     "",
+			Repository:  "",
 			Main:        filename,
 			Author:      author,
 		},
@@ -24,7 +25,8 @@ func initproj(name string, filename string, author string) {
 	if err != nil {
 		printerror("Failed to convert structure to TOML")
 	}
-	file, err := os.Create("Cake.cman")
+	var file *os.File
+	file, err = os.Create("Cake.cman")
 	if err != nil {
 		printerror("Failed to save to file")
 	}
@@ -35,14 +37,15 @@ func initproj(name string, filename string, author string) {
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize a new project and write to 'Packages.cman'",
+	Short: "Initialize a new project and write to 'Cake.cman' or '{name}.cman' (if it is a library)",
 	Long:  ``,
-	Args:  cobra.MaximumNArgs(3),
+	Args:  cobra.MaximumNArgs(4),
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			printerror("Not all required arguments provided! Pass `--help` for usage")
+		if len(args) < 2 {
+			printerror("Not all required arguments provided!\nUsage: cman init [NAME] [MAINFILENAME] [AUTHOR | optional] [--header | optional, use it if you want to initialize a library]")
 			os.Exit(4)
 		}
+		// fmt.Println(args)
 		name := args[0]
 		var filename string
 		if len(args) > 1 {
@@ -53,21 +56,22 @@ var initCmd = &cobra.Command{
 
 		var author string
 
-		if len(args) > 1 {
-			author = args[1]
+		if len(args) > 2 {
+			author = args[2]
 		} else {
-			author = "" // Set a default value if not provided
+			author = ""
 		}
 
 		initproj(name, filename, author)
-		color.Green("Project initialized successfully!")
+		success("Project initialized successfully!")
 		info("Read Cakefile best practice at https://github.com/beaglesoftware/cakeman/blob/main/BESTPRACTICE.md")
 		info("Run 'cman build' to build the project")
 		info("Run 'cman run' to run the project")
 		info("Run 'cman add' to add some dependencies")
 		info("Run 'cman pack' to pack the cake")
 		info("Run 'cman publish' to publish the cake")
-		color.HiGreen("Happy coding!")
+		info("Run 'cman set-type lib' to turn this cake into a library that includes some headers")
+		fmt.Println("Happy coding!")
 	},
 }
 
