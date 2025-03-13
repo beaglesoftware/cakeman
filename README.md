@@ -51,10 +51,7 @@ go build main.go -o "dist/windows/$ARCH/cakeman.exe "
 
 **Note:** "No" doesn't mean that it won't be avaliable in the future. It may be avaliable in the future
 
-|-----------------------------------------------------------|
-| Feature | Supported OS/OSes | Avaliable | It is working?  |
-|-----------------------------------------------------------|
-| Supports dependencies | Cross-platform | ✅ Yes | ✅ Yes |
-|-----------------------------------------------------------|
-| Have a build system | N/A |      ❌ No       |     N/A.   | 
-|-----------------------------------------------------------|
+| Feature               | Supported OS/OSes | Available | It is working? |
+|-----------------------|-------------------|-----------|----------------|
+| Supports dependencies | Cross-platform     | ✅ Yes     | ✅ Yes          |
+| Have a build system   | N/A               | ❌ No      | N/A            |
