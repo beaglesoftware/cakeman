@@ -49,7 +49,7 @@ go build main.go -o "dist/windows/$ARCH/cakeman.exe "
 
 ## Features
 
-**Note:** "No" doesn't mean that it won't be avaliable in the future. It may be avaliable in the future
+**Note:** "No" doesn't mean that it won't be available in the future. It may be available in the future
 
 | Feature               | Supported OS/OSes | Available | It is working? |
 |-----------------------|-------------------|-----------|----------------|
