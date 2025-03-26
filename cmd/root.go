@@ -140,3 +140,51 @@ func run_command(app string, arg0 string, arg1 string, arg2 string) {
 		os.Exit(1)
 	}
 }
+
+func run_command(app string, arg0 string, arg1 string, arg2 string) {
+	var command string
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		command = app + " " + arg0 + " " + arg1 + " " + arg2
+		cmd = exec.Command(command)
+	} else {
+		command = app + " " + arg0 + " " + arg1 + " " + arg2
+		script := "cman-build/compile.sh"
+		content := "#!/bin/bash\n" + command
+		// Write script to a temporary file
+		err := os.WriteFile(script, []byte(content), 0755)
+		if err != nil {
+			fmt.Println("Error writing script:", err)
+			return
+		}
+
+		cmd = exec.Command("/bin/bash", "-c", "./cman-build/compile.sh")
+	}
+	// os.Exit(0)
+	current, err := os.Getwd()
+	if err != nil {
+		printerror("Error when getting current directory: " + err.Error())
+	}
+	cmd.Dir = current
+	stderrPipe, err := cmd.StderrPipe()
+	if err != nil {
+		printerror("Failed to get stderr pipe: " + err.Error())
+		os.Exit(1)
+	}
+
+	if err := cmd.Start(); err != nil {
+		printerror("Failed to start command: " + err.Error())
+		os.Exit(1)
+	}
+
+	stderrBytes, err := io.ReadAll(stderrPipe)
+	if err != nil {
+		printerror("Failed to read stderr: " + err.Error())
+		os.Exit(1)
+	}
+
+	if err := cmd.Wait(); err != nil {
+		printerror(app + " " + arg0 + " " + arg1 + " " + arg2 + " exited with error: " + err.Error() + "\n" + string(stderrBytes))
+		os.Exit(1)
+	}
+}
