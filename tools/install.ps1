@@ -5,11 +5,11 @@ Invoke-WebRequest "https://github.com/beaglesoftware/cakeman/releases/cakeman-$v
 Write-Host "Extracting Cakeman..."
 Expand-Archive -Path "$env:USERPROFILE/Downloads/cakeman-temp/Cakeman.zip" -DestinationPath "$env:USERPROFILE/Downloads/cakeman-temp/cakeman"
 Write-Host "Copying Cakeman to the installation directory"
-Copy-Item -Path "$env:USERPROFILE/Downloads/cakeman-temp/cakeman" -Destination "$env:USERPROFILE/.cakeman/bin/" -Recurse
+Copy-Item -Path "$env:USERPROFILE/Downloads/cakeman-temp/cakeman" -Destination "$env:USERPROFILE/.cman/bin/" -Recurse
 
 Write-Host "Cleaning up temporary files"
 Remove-Item -Path "$env:USERPROFILE/Downloads/cakeman-temp" -Recurse
 Write-Host "Adding Cakeman to PATH"
-$currentpath = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-[System.Environment]::SetEnvironmentVariable("PATH", "$currentpath;$env:USERPROFILE/.cakeman/bin", "System")
+$currentpath = [System.Environment]::GetEnvironmentVariable("PATH")
+[System.Environment]::SetEnvironmentVariable("PATH", "$currentpath;$env:USERPROFILE/.cman/bin", "System")
 Write-Host "Installation complete!"

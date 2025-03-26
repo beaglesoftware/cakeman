@@ -1,2 +1,14 @@
+# Build files
 dist/
+
+# Test files
 *.test
+
+# Cakeman files
+headers/
+Cake.cman
+cman-build/
+
+# macOS system files
+.DS_Store
+__MACOSX/

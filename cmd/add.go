@@ -42,7 +42,7 @@ var addCmd = &cobra.Command{
 		url := "https://github.com/beaglesoftware/cakes/blob/main/manifests/" + firstchar + "/" + args[0] + ".cman"
 		response, err := http.Get(url)
 		if err != nil {
-			printerror("Failed to send request to beaglesoftware/cakes GitHub repo:" + err.Error())
+			printerror("Failed to send request to beaglesoftware/cakes GitHub repo: " + err.Error())
 			os.Exit(1)
 		}
 
@@ -51,7 +51,7 @@ var addCmd = &cobra.Command{
 		if response.StatusCode != http.StatusOK {
 			printerror("Got a non-200 HTTP status code: " + string(rune(response.StatusCode)))
 			if response.StatusCode == http.StatusNotFound {
-				hint("Error code is 404. Usually 404 error code will be returned if cake doesn't exists. Try adding an existing one")
+				hint("Error code is 404. Usually 404 error code will be returned if the cake doesn't exists. Try adding an existing one")
 			}
 			os.Exit(15)
 		}
@@ -83,6 +83,8 @@ var addCmd = &cobra.Command{
 			printerror("Failed to create file Cake.cman")
 		}
 		file2.Write(modifiedJSON)
+
+		success("Package `" + args[0] + "` added successfully")
 	},
 }
 
