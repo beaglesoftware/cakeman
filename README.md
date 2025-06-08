@@ -1,9 +1,9 @@
 ![Cakeman Poster](assets/Poster.png)
-# Cakeman
-The missing package manager for C and C++
+# CForge
+A no-nonsense C/C++ package manager
 
 > [!WARNING]
-> Cakeman is not ready for production use yet. Please wait until final release
+> CForge is not ready for production use yet. Please wait until final release
 
 ## Installation
 ### Windows
@@ -14,7 +14,7 @@ Run this comnand:
 irm "https://github.com/beaglesoftware/cakeman/blob/main/tools/install.ps1?raw=true" | iex
 ```
 
-If you're on Windows 11 24H2, you're lucky. Open PowerShell **but not as an administrator** and run this command:
+If you're on Windows 11 24H2, you're lucky. Open a **non-elevated** PowerShell window and run this command:
 ```powershell
 irm "https://github.com/beaglesoftware/cakeman/blob/main/tools/install.ps1?raw=true" | sudo iex
 ```
@@ -37,14 +37,14 @@ Run these commands:
 ./build.sh
 ```
 
-The path of binary is `dist/{YOUR OS}/{YOUR ARCHITECTURE}/cman`
+The path of binary is `dist/{YOUR OS}/{YOUR ARCHITECTURE}/cforge`
 
 ### Windows
 Run these commands:
 ```powershell
 $ARCH = $env:PROCESSOR_ARCHITECTURE
-go build main.go -o "dist/windows/$ARCH/cakeman.exe "
-./dist/windows/$ARCH/cakeman.exe 
+go build main.go -o "dist/windows/$ARCH/cforge.exe "
+./dist/windows/$ARCH/cforge.exe 
 ```
 
 ## Features
